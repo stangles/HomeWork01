@@ -22,10 +22,35 @@ private:
 	static const int kAppHeight=600;
 	static const int kTextureSize=1024; //Must be the next power of 2 bigger or equal to app dimensions
 
-	void drawRectangle(uint8_t* pixels, int x1, int y1, int width, int height, Color8u fillColor);
+	void drawRectangle(uint8_t* pixels, int x1, int y1, int width, int height, Color8u fill_color);
+
+	void drawCircle(uint8_t* pixels, int x1, int y1, int radius, Color8u fill_color);
+
+	void copyRect(uint8_t* pixels);
 };
 
-void HomeWork01App::drawRectangle(uint8_t* pixels, int x1, int y1, int width, int height, Color8u fillColor)
+void HomeWork01App::drawCircle(uint8_t* pixels, int x1, int y1, int radius, Color8u fill_color)
+{
+	int x_pos = x1 - radius;
+	int y_pos = y1 - radius;
+	int x_distance = x1 + (2*radius);
+	int y_distance = y1 + (2*radius);
+	Color8u c = fill_color;
+
+	float point_distance;
+	for(int y=y_pos; y<y_distance; y++) {
+		for(int x=x_pos; x<x_distance; x++) {
+			point_distance = (((float) y - (float) y1)*((float) y - (float) y1)) + (((float) x - (float) x1)*((float) x - (float) x1));
+			if(point_distance <= radius*radius) {
+				pixels[3*(x + y*kTextureSize)] = c.r;
+				pixels[3*(x + y*kTextureSize)+1] = c.g;
+				pixels[3*(x + y*kTextureSize)+2] = c.b;
+			}
+		}
+	}
+}
+
+void HomeWork01App::drawRectangle(uint8_t* pixels, int x1, int y1, int width, int height, Color8u fill_color)
 {
 	int x_pos;
 	int y_pos;
@@ -55,7 +80,7 @@ void HomeWork01App::drawRectangle(uint8_t* pixels, int x1, int y1, int width, in
 	if(y_pos+y_distance > kAppHeight)
 		y_distance = kAppHeight-y_pos;
 
-	Color8u c = fillColor;
+	Color8u c = fill_color;
 
 	for(int y=y_pos; y<y_distance; y++) {
 		for(int x=x_pos; x<x_distance; x++) {
@@ -79,7 +104,10 @@ void HomeWork01App::update()
 {
 	uint8_t* dataArray = (*my_surface_).getData();
 
-	drawRectangle(dataArray, 50, 50, 50, 25, Color8u(0,255,0));
+	drawRectangle(dataArray, 250, 200, 75, 50, Color8u(0,255,0));
+
+	drawCircle(dataArray, 150, 100, 50, Color8u(0,255,0));
+	drawCircle(dataArray, 150, 350, 50, Color8u(0,255,0));
 }
 
 void HomeWork01App::draw()
