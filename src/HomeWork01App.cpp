@@ -114,14 +114,22 @@ void HomeWork01App::mouseDown( MouseEvent event )
 
 void HomeWork01App::update()
 {
+
 	uint8_t* dataArray = (*my_surface_).getData();
 
-	drawRectangle(dataArray, 250, 200, 75, 50, Color8u(0,255,0));
+	//White Background
+	for(int i = 0; i < kTextureSize*kTextureSize; i++){
+			dataArray[3*(i)] = 255;
+			dataArray[3*(i)+1] = 255;
+			dataArray[3*(i)+2] = 255;
+	}
 
-	drawCircle(dataArray, 150, 100, 50, Color8u(0,255,0));
+	drawRectangle(dataArray, 250, 200, 75, 50, Color8u(0,255,0)); //Draw rectangle
+
+	drawCircle(dataArray, 150, 100, 50, Color8u(0,255,0)); //Draw Circles
 	drawCircle(dataArray, 150, 350, 50, Color8u(0,255,0));
 
-	//copyRect(dataArray, 0, 0, 400, 600);
+	//copyRect(dataArray, 0, 0, 400, 600); //This was intended to copy one half of the window onto the other
 }
 
 void HomeWork01App::draw()
