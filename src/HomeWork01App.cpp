@@ -1,7 +1,7 @@
-#include "cinder\app\AppBasic.h"
-#include "cinder\gl\gl.h"
+#include "cinder/app/AppBasic.h"
+#include "cinder/gl/gl.h"
 #include "Resources.h"
-#include "cinder\gl\Texture.h"
+#include "cinder/gl/Texture.h"
 
 using namespace ci;
 using namespace ci::app;
